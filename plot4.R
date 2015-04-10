@@ -17,12 +17,25 @@ data2$timestamp <- strptime(data2$timestamp,"%d/%m/%Y %T")
 str(data2)
 head(data2)
 
+par(mfrow=c(2,2), mar=c(4,4,2,1), oma=c(0,0,0.2,0))
+with(data2,{
 
-png("plot3.png", height=480, width=480)
+plot(timestamp, Global_active_power, ylab="Global Active Power", xlab=NA,pch=NA,
+         lines(timestamp, Global_active_power))
+plot(timestamp, Voltage, ylab="Voltage", xlab="datetime",pch=NA,
+         lines(timestamp, Voltage))
+
 with(data2, plot(timestamp, Sub_metering_1, ylab="Energy sub metering", xlab=NA,pch=NA))
 with(data2, lines(timestamp, Sub_metering_1, col="black"))
 with(data2, lines(timestamp, Sub_metering_2, col="red"))
 with(data2, lines(timestamp, Sub_metering_3, col="blue"))
-legend("topright", lty=1 , col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+legend("top", lty=1, bty="n", cex=0.8, y.intersp=0.5,inset=0, col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
+
+plot(timestamp, Global_reactive_power, ylab="Global_reactive_power", xlab="datetime",pch=NA,
+     lines(timestamp, Global_reactive_power))
+})
+
+dev.copy(png, file="plot4.png", height=480, width=480)
 dev.off()
+
